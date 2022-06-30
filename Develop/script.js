@@ -6,19 +6,17 @@ var timeBlockEl = document.querySelector('.container');
 // Display the current date and time
 $('#currentDay').text(today.format('LLLL'));
 
-// EVENT LISTENER
-// Event listener for saveBtn click
+
+// saveBtn function
 $('.saveBtn').on('click', function () {
-  // get nearby values of the description in jQuery
+ 
   var textValue = $(this).siblings('.description').val();
-  // get the id attribute of the parent div element
   var timeKey = $(this).parent().attr('id');
 
-  // save in local storage
+
   localStorage.setItem(timeKey, textValue);
 });
 
-// Get item from local storage if any
 $('#hour8 .description').val(localStorage.getItem('hour8'));
 $('#hour9 .description').val(localStorage.getItem('hour9'));
 $('#hour10 .description').val(localStorage.getItem('hour10'));
@@ -29,4 +27,34 @@ $('#hour2 .description').val(localStorage.getItem('hour2'));
 $('#hour3 .description').val(localStorage.getItem('hour3'));
 $('#hour4 .description').val(localStorage.getItem('hour4'));
 $('#hour5 .description').val(localStorage.getItem('hour5'));
+
+//Start of function to change colors
+function changeTask() {
+    
+    var currentHour = today.hours();
+  
+    $('.time-block').each(function () {
+      var timeId = parseInt($(this).attr('id').split("hour")[1]);
+  
+      // Adds past class
+      if (timeId < currentHour) {
+        $(this).addClass('past');
+      } // Adds present class
+      else if (timeId === currentHour) {
+        $(this).removeClass('past');
+        $(this).removeClass('future');
+        $(this).addClass('present');
+      } // Adds the future class
+      else {
+        $(this).removeClass('past');
+        $(this).removeClass('present');
+        $(this).addClass('future');
+      }
+    });
+  }
+  
+  
+  changeTask();
+  
+
 
